@@ -31,7 +31,7 @@ function init() {
       const cube = new THREE.Mesh( geometry, material );
       cube.position.x = x
       cube.position.z = z
-      chunks[stringify(x)+"|"+stringify(z)][x-(x-)].push(cube)
+      chunks[stringify(x)+"|"+stringify(z)][x-(x-chunk[0])].push(cube)
     }
   }
 }
