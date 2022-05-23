@@ -13,3 +13,14 @@ Chunk positions are different from block positions
 
 
 **If block is close to this border and this border, it is in that chunk?**
+
+- One can use a spear to get fish. (throw it in the water)
+- Material for a boat:
+- - 25 Wood
+- - 5 Iron
+- - Food
+
+- Material for a portal
+- - Special stone
+- - 1 Wood
+- - Magic potion (you get it from a dragon)
