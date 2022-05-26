@@ -20,7 +20,8 @@ const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
 const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+const loader = new OBJLoader();
+const material = new THREE.MeshBasicMaterial( { map: texture } );
 
 const game = document.getElementById('game');
 
@@ -49,20 +50,51 @@ for (let i = 1; i < 10; i += 2) {
 
 function init() {
 
+  camera.position.y = 2
+
+
   var noise = new noisejs.Noise(Math.random());
   
-  for (let x=0; x < 101; x++) {
-    for (let z=0; z<101; z++) {
-      //const chunk = getChunk(x, z)
-      const cube = new THREE.Mesh( geometry, material );
-      cube.position.x = x
-      cube.position.z = z
-      cube.position.y = noise.simplex2(x / 100, z / 100) *10;
-      cube.scale.set(10,10,10);
-      blocklist.push( cube );
-      scene.add( cube );
+  loader.load(
+    // resource URL
+    'models/monster.obj',
+    // called when resource is loaded
+    function ( object ) {
+  
+      scene.add( object );
+  
+    },
+    // called when loading is in progresses
+    function ( xhr ) {
+  
+      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+  
+    },
+    // called when loading has errors
+    function ( error ) {
+  
+      console.log( 'An error happened' );
+  
     }
-  };
+  );
+
+
+    for (let x=0; x < 201; x += 10) {
+      for (let z=0; z<201; z+=10) {
+        //const chunk = getChunk(x, z)
+        const cube = new THREE.Mesh(geometry, material)
+        cube.position.x = x
+        cube.position.z = z
+        cube.position.y = noise.perlin2(x/100, z/100) * 100;
+        cube.scale.set(10,10,10);
+        blocklist.push( cube );
+        scene.add( cube );
+      }
+    };
+ 
+
+
+
 
   const test = new THREE.Mesh( geometry, material );
   test.position.x = 200
@@ -164,8 +196,8 @@ function animate() {
 
     const delta = ( time - prevTime ) / 1000;
 
-    velocity.x -= velocity.x * 10.0 * delta;
-    velocity.z -= velocity.z * 10.0 * delta;
+    velocity.x -= velocity.x * 5.0 * delta;
+    velocity.z -= velocity.z * 5.0 * delta;
 
     velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
 
