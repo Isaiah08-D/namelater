@@ -19,9 +19,12 @@ document.body.appendChild( renderer.domElement );
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
+const grass = new THREE.TextureLoader().load( 'https://raw.githubusercontent.com/Isaiah08-D/namelater/main/textures/blocks/grass.png' );
+
+
 const geometry = new THREE.BoxGeometry();
-const loader = new THREE.Loader();
-const material = new THREE.MeshBasicMaterial();
+const material = new THREE.MeshBasicMaterial({map:grass});
+
 
 const game = document.getElementById('game');
 
@@ -55,28 +58,6 @@ function init() {
 
   var noise = new noisejs.Noise(Math.random());
 
-  loader.load(
-    // resource URL
-    'https://raw.githubusercontent.com/Isaiah08-D/namelater/main/textures/blocks/grass.obj',
-    // called when resource is loaded
-    function ( object ) {
-  
-      scene.add( object );
-  
-    },
-    // called when loading is in progresses
-    function ( xhr ) {
-  
-      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-  
-    },
-    // called when loading has errors
-    function ( error ) {
-  
-      console.log( 'An error happened' );
-  
-    }
-  );
 
 
     for (let x=0; x < 201; x += 10) {
@@ -87,7 +68,7 @@ function init() {
         cube.position.z = z
         cube.position.y = noise.perlin2(x/100, z/100) * 100;
         cube.scale.set(10,10,10);
-        blocklist.push( cube );
+        blocklist.push(cube);
         scene.add( cube );
       }
     };
