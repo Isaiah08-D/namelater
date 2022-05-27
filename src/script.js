@@ -20,8 +20,8 @@ const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
 const geometry = new THREE.BoxGeometry();
-const loader = new OBJLoader();
-const material = new THREE.MeshBasicMaterial( { map: texture } );
+const loader = new THREE.Loader();
+const material = new THREE.MeshBasicMaterial();
 
 const game = document.getElementById('game');
 
@@ -54,10 +54,10 @@ function init() {
 
 
   var noise = new noisejs.Noise(Math.random());
-  
+
   loader.load(
     // resource URL
-    'models/monster.obj',
+    'https://raw.githubusercontent.com/Isaiah08-D/namelater/main/textures/blocks/grass.obj',
     // called when resource is loaded
     function ( object ) {
   
