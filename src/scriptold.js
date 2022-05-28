@@ -1,6 +1,5 @@
 import './style.css'
 import * as THREE from 'three'
-import * as math from "mathjs"
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 import {Raycaster} from "three"
 import * as noisejs from "noisejs"
@@ -48,6 +47,7 @@ let chunks = {}
 let blockchunkConversion = {}
 let blocklist = []
 console.log('test')
+
 for (let i = 1; i == 10; i += 1) {
   for (let f = 1; f == 10; f += 1) {
     chunks[Date.now()] = [[[], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], []], [], [[], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], []]]
