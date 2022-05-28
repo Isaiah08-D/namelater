@@ -2,7 +2,7 @@
   "repository": "#",
   "license": "UNLICENSED",
   "scripts": {
-    "build": "webpack --config ./bundler/webpack.prod.js",
+    "build": "webpack --mode production",
     "start": "webpack serve --config ./bundler/webpack.start.js"
   },
   "dependencies": {

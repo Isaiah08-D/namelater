@@ -13,9 +13,12 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-var movingSpeed = 1.5;
+var JUMPHEIGHT = -3
+var SPEED = 1.5;
 var ySpeed = 0;
-var acc = 0.3;
+var GRAVITY = 0.2;
+var autoJump = false;
+
 
 function Block(x, y, z) {
   this.x = x;
@@ -75,8 +78,13 @@ controls.addEventListener("unlock", function(){
 })
 
 var keys = []
+var canJump = true
 document.addEventListener("keydown", function(e) { 
   keys.push(e.key)
+  if (e.key == " " && canJump) {
+    ySpeed = JUMPHEIGHT
+    canJump = false
+  }
 
 })
 document.addEventListener("keyup", function(e) {
@@ -90,20 +98,68 @@ document.addEventListener("keyup", function(e) {
 })
 
 function update(){
-  if (keys.includes("w")){
-    controls.moveForward(movingSpeed);
+  if(keys.includes("w")){
+    controls.moveForward(SPEED);
+    if(autoJump == false){
+      for(var i = 0; i < blocks.length; i++){
+        if(camera.position.x <= blocks[i].x + 2.5 && camera.position.x >= blocks[i].x - 2.5 && camera.position.z <= blocks[i].z + 2.5 && camera.position.z >= blocks[i].z - 2.5){
+          if(camera.position.y == blocks[i].y - 2.5){
+            controls.moveForward(-1 * SPEED);
+          }
+        }
+      }
+    }
   }
-  if (keys.includes("a")){
-    controls.moveRight(-1 * movingSpeed);
+  if(keys.includes("a")){
+    controls.moveRight(-1 * SPEED);
+    if(autoJump == false){
+      for(var i = 0; i < blocks.length; i++){
+        if(camera.position.x <= blocks[i].x + 2.5 && camera.position.x >= blocks[i].x - 2.5 && camera.position.z <= blocks[i].z + 2.5 && camera.position.z >= blocks[i].z - 2.5){
+          if(camera.position.y == blocks[i].y - 2.5){
+            controls.moveRight(SPEED);
+          }
+        }
+      }
+    }
   }
-  if (keys.includes("s")){
-    controls.moveForward(-1 * movingSpeed);
+  if(keys.includes("s")){
+    controls.moveForward(-1 * SPEED);
+    if(autoJump == false){
+      for(var i = 0; i < blocks.length; i++){
+        if(camera.position.x <= blocks[i].x + 2.5 && camera.position.x >= blocks[i].x - 2.5 && camera.position.z <= blocks[i].z + 2.5 && camera.position.z >= blocks[i].z - 2.5){
+          if(camera.position.y == blocks[i].y - 2.5){
+            controls.moveForward(SPEED);
+          }
+        }
+      }
+    }
   }
-  if (keys.includes("d")){
-    controls.moveRight(-1 * movingSpeed);
+  if(keys.includes("d")){
+    controls.moveRight(SPEED);
+    if(autoJump == false){
+      for(var i = 0; i < blocks.length; i++){
+        if(camera.position.x <= blocks[i].x + 2.5 && camera.position.x >= blocks[i].x - 2.5 && camera.position.z <= blocks[i].z + 2.5 && camera.position.z >= blocks[i].z - 2.5){
+          if(camera.position.y == blocks[i].y - 2.5){
+            controls.moveRight(-1 * SPEED);
+          }
+        }
+      }
+    }
   }
 
-  camera.position.y = cameraposition.y - ySpeed;
+  camera.position.y = camera.position.y - ySpeed;
+  ySpeed = ySpeed + GRAVITY;
+
+  for (var i = 0; i < blocks.length; i++) {
+			if(camera.position.x <= blocks[i].x + 2.5 && camera.position.x >= blocks[i].x - 2.5 && camera.position.z <= blocks[i].z + 2.5 && camera.position.z >= blocks[i].z - 2.5){
+        if(camera.position.y <= blocks[i].y + 2.5 && camera.position.y >= blocks[i].y - 2.5){
+          camera.position.y = blocks[i].y + 2.5;
+          ySpeed = 0;
+          canJump = true;
+          break;
+			  }
+    }
+  }
 
 }
 
