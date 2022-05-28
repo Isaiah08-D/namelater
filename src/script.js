@@ -225,4 +225,4 @@ function animate() {
 };
 
 init();
-animate()
+animate();
