@@ -19,6 +19,10 @@ var ySpeed = 0;
 var GRAVITY = 0.2;
 var autoJump = false;
 
+var loader = new THREE.TextureLoader();
+let materialArray = [
+  new THREE.MeshBasicMaterial({map:loader.load("")})
+];
 
 function Block(x, y, z) {
   this.x = x;
